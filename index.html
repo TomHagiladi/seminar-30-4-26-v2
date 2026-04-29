@@ -758,12 +758,13 @@ ol.bullets li::before {
 
 /* ========== Yutagogia reminder card (slide 11/12) ========== */
 .yutagogy-card {
-  margin-top: 2rem;
-  padding: 1.2rem 1.6rem;
+  margin: 2rem auto 0;
+  padding: 1.4rem 1.8rem;
   background: var(--teal-tint);
-  border-right: 4px solid var(--teal);
+  border-top: 4px solid var(--teal);
   border-radius: var(--radius-md);
   max-width: 60ch;
+  text-align: center;
 }
 .yutagogy-eyebrow {
   font-family: var(--sans);
@@ -780,6 +781,7 @@ ol.bullets li::before {
   line-height: 1.55;
   color: var(--ink);
   margin: 0;
+  text-align: center;
 }
 .yutagogy-card em {
   color: var(--brand);
@@ -924,13 +926,78 @@ p.body, p.lede {
   margin-top: clamp(0.6rem, 1vw, 1rem);
 }
 
-/* slide 16 specific — center the studio CTA */
-.studio-center-stack {
+/* ========== Two-column slide layout (slide 5 + slide 17) ========== */
+.split-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(280px, 1fr);
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+  width: 100%;
+}
+.split-main { min-width: 0; }
+.split-aside {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
+  gap: 1rem;
+  padding: clamp(1.4rem, 2.4vw, 2rem);
+  background: var(--bg-deep);
+  border-radius: var(--radius-lg);
+  border-top: 4px solid var(--accent);
+}
+.split-aside-eyebrow {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1vw, 1.05rem);
+  letter-spacing: 0.12em;
+  color: var(--accent-deep);
+}
+.split-aside-title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 1.7vw, 1.7rem);
+  line-height: 1.3;
+  color: var(--ink);
+}
+.split-aside-qr {
+  align-self: center;
+  width: clamp(150px, 16vw, 200px);
+  height: clamp(150px, 16vw, 200px);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  display: block;
+}
+.split-aside-cap {
   text-align: center;
-  gap: clamp(0.8rem, 1.4vw, 1.2rem);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+.split-aside-button {
+  display: inline-block;
+  padding: 0.85rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  text-decoration: none;
+  text-align: center;
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  background: var(--brand);
+  color: var(--bg);
+  box-shadow: 0 4px 14px rgba(155, 44, 62, 0.25);
+}
+.split-aside-button.is-accent {
+  background: var(--accent);
+  box-shadow: 0 4px 14px rgba(217, 87, 42, 0.3);
+}
+.split-aside-button:hover { transform: translateY(-1px); }
+@media (max-width: 720px) {
+  .split-layout { grid-template-columns: 1fr; }
 }
 
 /* ========== Closing-slide QR ========== */
@@ -1064,8 +1131,8 @@ p.body, p.lede {
   <div class="slide-inner">
     <h3 class="eyebrow"><span class="eyebrow-dot"></span>תיאום ציפיות</h3>
     <h2 class="section" id="s2-title">
-      לא באנו לכאן לפתור.<br>
-      באנו לחשוב אחרת.
+      משתחררים מהאשליה<br>
+      של <span style="color: var(--brand);">פתרונות מהירים</span>.
     </h2>
     <p class="body" style="font-size: clamp(1.2rem, 1.6vw, 1.55rem); max-width: 75ch;">
       המצב באקדמיה אל מול ה-AI הוא מורכב מאוד, ולא נראה שפתרונות מוכרים ורגילים יעשו את העבודה.
@@ -1082,33 +1149,31 @@ p.body, p.lede {
 <!-- ============ SLIDE 3 — חימום (חלק 1, פתיחה) ============ -->
 <section class="slide" data-section="חלק 1 · חימום" aria-labelledby="s3-title">
   <div class="slide-inner">
-    <div class="warmup-heading-wrap">
-      <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 1 · חימום</h3>
-      <h2 class="section" id="s3-title">
-        קודם, נחזור<br>
-        <span style="color: var(--accent);">לרגע של למידה אמיתית.</span>
-      </h2>
-    </div>
-    <p class="warmup-prompt">
-      חשבו על תהליך למידה שעברתם לאחרונה <em style="color: var(--brand); font-style: normal; font-weight: 600;">מתוך עצמכם</em> — מתוך רצון, סקרנות, או צורך אישי. לא משהו שלמדתם כי הייתם חייבים. משהו שבחרתם.
-    </p>
-    <ul class="bullets" style="margin-top: 1.4rem;">
-      <li>בזוגות או בשלשות בחדרים — משתפים זה את זה</li>
-      <li><strong>15 דקות</strong> לכל הסבב</li>
-      <li>נחזור למליאה ונדון במה שהיה בחדרים</li>
-    </ul>
-    <div class="studio-cta" style="margin-top: clamp(1.5rem, 2.5vw, 2rem);">
-      <div class="studio-cta-text">
-        <div class="studio-cta-title">8 השאלות המנחות מחכות לכם באפליקציה</div>
-        <div class="studio-cta-meta">סרקו את ה-QR או לחצו על הכפתור</div>
-        <a href="https://tomhagiladi.github.io/seminar-30-4-26-v2/app/#/questions" target="_blank" rel="noopener" class="studio-cta-button">
-          פתחו את 8 השאלות ←
+    <div class="split-layout">
+      <div class="split-main">
+        <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 1 · חימום</h3>
+        <h2 class="section" id="s3-title" style="font-size: clamp(2rem, 3.6vw, 3.2rem); margin-bottom: 1rem;">
+          קודם, נחזור<br>
+          <span style="color: var(--accent);">לרגע של למידה אמיתית.</span>
+        </h2>
+        <p class="warmup-prompt">
+          חשבו על תהליך למידה שעברתם לאחרונה <em style="color: var(--brand); font-style: normal; font-weight: 600;">מתוך עצמכם</em> — מתוך רצון, סקרנות, או צורך אישי. משהו שבחרתם.
+        </p>
+        <ul class="bullets" style="margin-top: 1.2rem;">
+          <li>בזוגות או בשלשות בחדרי זום</li>
+          <li><strong>15 דקות</strong> לכל הסבב</li>
+          <li>נחזור למליאה ונדון במה שעלה</li>
+        </ul>
+      </div>
+      <aside class="split-aside">
+        <div class="split-aside-eyebrow">לחדרים — קחו איתכם</div>
+        <div class="split-aside-title">8 השאלות המנחות לשיח</div>
+        <img src="qr-questions.png" alt="QR ל-8 השאלות המנחות" class="split-aside-qr">
+        <span class="split-aside-cap">סרקו או לחצו</span>
+        <a href="https://tomhagiladi.github.io/seminar-30-4-26-v2/app/#/questions" target="_blank" rel="noopener" class="split-aside-button">
+          פתחו את השאלות ←
         </a>
-      </div>
-      <div class="studio-cta-qr">
-        <img src="qr-questions.png" alt="QR ל-8 השאלות המנחות">
-        <span class="studio-cta-qr-cap">סרקו לפתיחה</span>
-      </div>
+      </aside>
     </div>
   </div>
 </section>
@@ -1238,7 +1303,7 @@ p.body, p.lede {
       <div class="cap">
         <div class="cap-icon">{ }</div>
         <div class="cap-title">קוד ברמה גבוהה</div>
-        <div class="cap-desc">טוב יותר ממתכנתים מומחים (לא בינוניים). כותב, מנתח ומתקן.</div>
+        <div class="cap-desc">טוב יותר ממתכנתים מומחים. כותב, מנתח ומתקן.</div>
       </div>
       <div class="cap">
         <div class="cap-icon">+</div>
@@ -1281,6 +1346,9 @@ p.body, p.lede {
     <p class="body" style="margin-top: 2.5rem; max-width: 70ch;">
       האקדמיה כבר אינה "מגדל השן" המחזיק במונופול על הפצת ידע. מרצה מרתק זה נהדר, אבל הידע נגיש גם בלעדיו.
     </p>
+    <p class="empathic-question" style="margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px dashed var(--line); border-bottom: none; padding-bottom: 0;">
+      אבל מה לגבי המומחיות שלי? האם אין לה ערך?
+    </p>
   </div>
 </section>
 
@@ -1296,9 +1364,6 @@ p.body, p.lede {
     </p>
     <p class="body" style="margin-top: 2.5rem; padding: 1.4rem 1.6rem; background: var(--accent-tint); border-radius: var(--radius-md); border-right: 4px solid var(--accent); font-weight: 500; color: var(--ink); font-size: clamp(1.1rem, 1.5vw, 1.45rem);">
       כדי לפתור את בעיית ההערכה, אין מנוס משינוי שיטות ההוראה.
-    </p>
-    <p class="empathic-question" style="margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px dashed var(--line); border-bottom: none; padding-bottom: 0;">
-      אבל מה לגבי המומחיות שלי? האם אין לה ערך?
     </p>
   </div>
 </section>
@@ -1372,30 +1437,30 @@ p.body, p.lede {
 
 <!-- ============ SLIDE 14 — חלק 4: סטודיו ============ -->
 <section class="slide" data-section="חלק 4 · סטודיו אישי" aria-labelledby="s14-title">
-  <div class="slide-inner studio-center-stack">
-    <h3 class="eyebrow" style="justify-content: center;"><span class="eyebrow-dot"></span>חלק 4 · סטודיו למחשבה מעשית</h3>
-    <h2 class="section" id="s14-title" style="font-size: clamp(2rem, 3.4vw, 3rem); text-align: center;">
-      מסע למידה אישי<br>
-      <span style="color: var(--brand);">בנושא לא מוכר</span>
-    </h2>
-    <p class="lede" style="max-width: 60ch; text-align: center; margin: 1rem auto 0; font-size: clamp(1.2rem, 1.5vw, 1.5rem);">
-      פתחו את הסטודיו האישי במכשיר שלכם. הפרומפט המלא, ההוראות וכל השלבים מחכים שם.
-    </p>
-    <p class="body" style="margin: 0.4rem auto 0; font-weight: 600; color: var(--brand); font-size: clamp(1.15rem, 1.5vw, 1.5rem); text-align: center; max-width: none;">
-      ההתנסות תיקח רבע שעה.
-    </p>
-    <div class="studio-cta is-centered" style="grid-template-columns: auto 1fr;">
-      <div class="studio-cta-qr">
-        <img src="qr-explore.png" alt="QR לסטודיו האישי">
-        <span class="studio-cta-qr-cap">סרקו לפתיחה</span>
+  <div class="slide-inner">
+    <div class="split-layout">
+      <div class="split-main">
+        <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 4 · סטודיו למחשבה מעשית</h3>
+        <h2 class="section" id="s14-title" style="font-size: clamp(2rem, 3.6vw, 3rem); margin-bottom: 1rem;">
+          מסע למידה אישי<br>
+          <span style="color: var(--brand);">בנושא לא מוכר</span>
+        </h2>
+        <p class="lede" style="max-width: 60ch; font-size: clamp(1.2rem, 1.55vw, 1.55rem);">
+          פתחו את הסטודיו האישי במכשיר שלכם. הפרומפט המלא, ההוראות וכל השלבים מחכים שם.
+        </p>
+        <p class="body" style="margin-top: 1.2rem; font-weight: 600; color: var(--brand); font-size: clamp(1.2rem, 1.6vw, 1.6rem);">
+          ההתנסות תיקח רבע שעה.
+        </p>
       </div>
-      <div class="studio-cta-text" style="align-items: flex-start;">
-        <div class="studio-cta-title">סטודיו אישי בכלי AI</div>
-        <div class="studio-cta-meta">סרקו את ה-QR או לחצו על הכפתור</div>
-        <a href="https://tomhagiladi.github.io/seminar-30-4-26-v2/app/#/explore" target="_blank" rel="noopener" class="studio-cta-button" style="background: var(--accent); box-shadow: 0 4px 14px rgba(217,87,42,0.35);">
+      <aside class="split-aside" style="border-top-color: var(--accent);">
+        <div class="split-aside-eyebrow">למכשיר האישי שלכם</div>
+        <div class="split-aside-title">סטודיו אישי בכלי AI</div>
+        <img src="qr-explore.png" alt="QR לסטודיו האישי" class="split-aside-qr">
+        <span class="split-aside-cap">סרקו או לחצו</span>
+        <a href="https://tomhagiladi.github.io/seminar-30-4-26-v2/app/#/explore" target="_blank" rel="noopener" class="split-aside-button is-accent">
           פתחו את הסטודיו ←
         </a>
-      </div>
+      </aside>
     </div>
   </div>
 </section>
