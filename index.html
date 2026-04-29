@@ -103,10 +103,10 @@ html, body {
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  padding: clamp(2rem, 5vw, 5rem) clamp(2.5rem, 7vw, 7rem);
+  padding: clamp(3.5rem, 6vw, 5.5rem) clamp(2.5rem, 7vw, 7rem) clamp(2.5rem, 4vw, 4rem);
   opacity: 0;
   pointer-events: none;
-  transition: opacity 280ms var(--ease-out);
+  transition: opacity 320ms var(--ease-out);
   overflow-y: auto;
 }
 
@@ -206,11 +206,11 @@ ul.bullets, ol.bullets {
 }
 ul.bullets li, ol.bullets li {
   font-family: var(--sans);
-  font-size: clamp(1.05rem, 1.4vw, 1.4rem);
+  font-size: clamp(1.25rem, 1.7vw, 1.7rem);
   line-height: 1.6;
   color: var(--ink-soft);
   padding-right: 1.6rem;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.9rem;
   position: relative;
 }
 ul.bullets li::before {
@@ -244,25 +244,27 @@ ol.bullets li::before {
 }
 .questions-grid .q {
   font-family: var(--sans);
-  font-size: clamp(0.95rem, 1.15vw, 1.2rem);
+  font-size: clamp(1.15rem, 1.55vw, 1.6rem);
   line-height: 1.5;
-  color: var(--ink-soft);
-  padding-right: 2rem;
+  color: var(--ink);
+  padding-right: 2.6rem;
+  padding-left: 1rem;
+  padding-block: 0.6rem;
   position: relative;
   border-right: 2px solid var(--line);
-  padding-block: 0.3rem;
+  font-weight: 500;
 }
 .questions-grid .q-num {
   position: absolute;
   right: -2px;
-  top: 0.3rem;
+  top: 0.55rem;
   background: var(--bg);
   color: var(--brand);
   font-family: var(--serif);
-  font-weight: 700;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
-  font-size: 1.1em;
+  font-weight: 800;
+  padding-left: 0.45rem;
+  padding-right: 0.45rem;
+  font-size: 1.25em;
 }
 
 /* ========== Compare table ========== */
@@ -796,6 +798,141 @@ p.body, p.lede {
   line-height: 1.7;
 }
 
+/* ========== Agenda slide (slide 3 — תכנית המפגש) ========== */
+.agenda-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.5rem;
+  margin-top: clamp(1.5rem, 3vw, 2.4rem);
+  max-width: 1100px;
+}
+@media (max-width: 720px) { .agenda-grid { grid-template-columns: 1fr; } }
+.agenda-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 1rem 1.2rem;
+  background: var(--bg-deep);
+  border-radius: var(--radius-md);
+  border-right: 4px solid var(--accent);
+}
+.agenda-num {
+  flex: 0 0 auto;
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(1.6rem, 2.2vw, 2rem);
+  color: var(--brand);
+  line-height: 1;
+  min-width: 2ch;
+}
+.agenda-text {
+  font-family: var(--sans);
+  font-size: clamp(1.1rem, 1.4vw, 1.4rem);
+  line-height: 1.45;
+  color: var(--ink);
+  font-weight: 500;
+}
+.agenda-text small {
+  display: block;
+  font-weight: 400;
+  font-size: 0.78em;
+  color: var(--ink-mute);
+  margin-top: 0.25rem;
+}
+
+/* ========== Studio CTA layout (slide 4 + slide 16 — link to app) ========== */
+.studio-cta {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(2rem, 4vw, 3.5rem);
+  align-items: center;
+  max-width: 1080px;
+  margin-top: clamp(2rem, 3vw, 2.5rem);
+  padding: clamp(1.4rem, 2.4vw, 2rem) clamp(1.6rem, 3vw, 2.4rem);
+  background: var(--bg-deep);
+  border-radius: var(--radius-lg);
+  border-right: 4px solid var(--accent);
+}
+.studio-cta.is-centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+.studio-cta-text { display: flex; flex-direction: column; gap: 0.6rem; }
+.studio-cta-title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 1.9vw, 1.85rem);
+  color: var(--ink);
+  line-height: 1.3;
+}
+.studio-cta-meta {
+  font-family: var(--sans);
+  font-size: clamp(1rem, 1.2vw, 1.2rem);
+  color: var(--ink-mute);
+}
+.studio-cta-button {
+  display: inline-block;
+  padding: 0.95rem 1.8rem;
+  background: var(--brand);
+  color: var(--bg);
+  border-radius: var(--radius-md);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(1.05rem, 1.25vw, 1.25rem);
+  text-decoration: none;
+  box-shadow: 0 4px 14px rgba(155, 44, 62, 0.25);
+  width: max-content;
+  transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+}
+.studio-cta-button:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(155, 44, 62, 0.32); }
+.studio-cta-qr {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+.studio-cta-qr img {
+  width: clamp(140px, 16vw, 190px);
+  height: clamp(140px, 16vw, 190px);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 6px;
+  display: block;
+}
+.studio-cta-qr-cap {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--ink-mute);
+  letter-spacing: 0.04em;
+}
+@media (max-width: 720px) {
+  .studio-cta { grid-template-columns: 1fr; }
+  .studio-cta-qr { margin: 0 auto; }
+}
+
+/* slide 4 specific — keep heading airy */
+.warmup-heading-wrap { margin-bottom: clamp(0.8rem, 1.5vw, 1.2rem); }
+.warmup-prompt {
+  font-family: var(--sans);
+  font-size: clamp(1.15rem, 1.55vw, 1.55rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 70ch;
+  margin-top: clamp(0.6rem, 1vw, 1rem);
+}
+
+/* slide 16 specific — center the studio CTA */
+.studio-center-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: clamp(0.8rem, 1.4vw, 1.2rem);
+}
+
 /* ========== Closing-slide QR ========== */
 .end-qr {
   margin-top: 2rem;
@@ -836,8 +973,8 @@ p.body, p.lede {
 
 <div class="paper-grain" aria-hidden="true"></div>
 
-<div class="slide-indicator" aria-hidden="true" id="slideIndicator">01 / 19</div>
-<!-- total now 19: added "המסע שלנו היום" between cover and תיאום ציפיות. slide 16 removed earlier; 7 split to 7a+7b. -->
+<div class="slide-indicator" aria-hidden="true" id="slideIndicator">01 / 20</div>
+<!-- total now 20: added המסע שלנו + תכנית המפגש after cover. old slide 16 removed; 7 split to 7a+7b. -->
 <div class="section-badge" aria-hidden="true" id="sectionBadge">פתיחה</div>
 
 <main id="main-content" class="stage" role="main" aria-live="polite" aria-label="מצגת">
@@ -886,7 +1023,43 @@ p.body, p.lede {
   </div>
 </section>
 
-<!-- ============ SLIDE 3 — תיאום ציפיות ============ -->
+<!-- ============ SLIDE 3 — תכנית המפגש ============ -->
+<section class="slide" data-section="פתיחה · תכנית המפגש" aria-labelledby="s3plan-title">
+  <div class="slide-inner">
+    <h3 class="eyebrow"><span class="eyebrow-dot"></span>תכנית המפגש להיום</h3>
+    <h2 class="section" id="s3plan-title" style="font-size: clamp(2rem, 3.8vw, 3.2rem);">
+      מה נעשה ב-<span style="color: var(--brand);">שעתיים</span> הקרובות
+    </h2>
+    <div class="agenda-grid">
+      <div class="agenda-row">
+        <div class="agenda-num">1</div>
+        <div class="agenda-text">חימום ושיתוף בזוגות<small>סיפור של למידה אותנטית שעברתם · 25 ד'</small></div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-num">2</div>
+        <div class="agenda-text">הפער בין אקדמיה ללמידה אמיתית<small>למה הפרדיגמה הקיימת לא עובדת מול AI · 20 ד'</small></div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-num">3</div>
+        <div class="agenda-text">המרצה כנווט · יוטגוגיה<small>שינוי תפקיד והערכה כנגזרת של הוראה · 25 ד'</small></div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-num">4</div>
+        <div class="agenda-text">סטודיו אישי בכלי AI<small>שתי התנסויות אישיות במכשיר שלכם · 30 ד'</small></div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-num">5</div>
+        <div class="agenda-text">הערכה כתביעת ציון<small>רעיון מעשי 1 — חוזה חדש עם הסטודנט · 10 ד'</small></div>
+      </div>
+      <div class="agenda-row">
+        <div class="agenda-num">6</div>
+        <div class="agenda-text">קריאה לפעולה — 20%<small>סיכום, מה לוקחים, מה הצעד הראשון · 10 ד'</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4 — תיאום ציפיות ============ -->
 <section class="slide" data-section="פתיחה" aria-labelledby="s2-title">
   <div class="slide-inner">
     <h3 class="eyebrow"><span class="eyebrow-dot"></span>תיאום ציפיות</h3>
@@ -909,32 +1082,34 @@ p.body, p.lede {
 <!-- ============ SLIDE 3 — חימום (חלק 1, פתיחה) ============ -->
 <section class="slide" data-section="חלק 1 · חימום" aria-labelledby="s3-title">
   <div class="slide-inner">
-    <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 1 · חימום</h3>
-    <h2 class="section" id="s3-title">
-      קודם, נחזור<br>
-      <span style="color: var(--accent);">לרגע של למידה אמיתית.</span>
-    </h2>
-    <p class="lede" style="margin-top: 1.5rem;">
-      חשבו על תהליך למידה שעברתם לאחרונה <em style="color: var(--brand); font-style: normal;">מתוך עצמכם</em> — מתוך רצון, סקרנות, או צורך אישי. לא משהו שלמדתם כי הייתם חייבים. משהו שבחרתם.
+    <div class="warmup-heading-wrap">
+      <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 1 · חימום</h3>
+      <h2 class="section" id="s3-title">
+        קודם, נחזור<br>
+        <span style="color: var(--accent);">לרגע של למידה אמיתית.</span>
+      </h2>
+    </div>
+    <p class="warmup-prompt">
+      חשבו על תהליך למידה שעברתם לאחרונה <em style="color: var(--brand); font-style: normal; font-weight: 600;">מתוך עצמכם</em> — מתוך רצון, סקרנות, או צורך אישי. לא משהו שלמדתם כי הייתם חייבים. משהו שבחרתם.
     </p>
-    <p class="body" style="margin-top: 2rem; font-weight: 500; color: var(--ink);">
-      תיכף נעבור לחדרים. בזוגות או בשלשות:
-    </p>
-    <ul class="bullets" style="margin-top: 1rem;">
-      <li>משתפים זה את זה</li>
-      <li>10 דקות לכל הסבב</li>
+    <ul class="bullets" style="margin-top: 1.4rem;">
+      <li>בזוגות או בשלשות בחדרים — משתפים זה את זה</li>
+      <li><strong>15 דקות</strong> לכל הסבב</li>
       <li>נחזור למליאה ונדון במה שהיה בחדרים</li>
     </ul>
-    <p class="body" style="margin-top: 2rem; font-size: clamp(1.05rem, 1.3vw, 1.3rem);">
-      8 השאלות המנחות מחכות לכם בדף הזה:
-    </p>
-    <a href="https://tomhagiladi.github.io/seminar-30-4-26-v2/app/#/questions" target="_blank" rel="noopener"
-       style="display: inline-block; margin-top: 0.8rem; padding: 0.9rem 1.8rem; background: var(--brand); color: var(--bg); border-radius: var(--radius-md); font-family: var(--sans); font-weight: 600; font-size: clamp(1.05rem, 1.25vw, 1.25rem); text-decoration: none; box-shadow: 0 4px 14px rgba(155,44,62,0.3);">
-      פתחו את 8 השאלות ←
-    </a>
-    <p class="body" style="margin-top: 0.8rem; font-family: var(--mono); color: var(--ink-mute); font-size: 1rem; direction: ltr;">
-      tomhagiladi.github.io/seminar-30-4-26-v2/app/#/questions
-    </p>
+    <div class="studio-cta" style="margin-top: clamp(1.5rem, 2.5vw, 2rem);">
+      <div class="studio-cta-text">
+        <div class="studio-cta-title">8 השאלות המנחות מחכות לכם באפליקציה</div>
+        <div class="studio-cta-meta">סרקו את ה-QR או לחצו על הכפתור</div>
+        <a href="https://tomhagiladi.github.io/seminar-30-4-26-v2/app/#/questions" target="_blank" rel="noopener" class="studio-cta-button">
+          פתחו את 8 השאלות ←
+        </a>
+      </div>
+      <div class="studio-cta-qr">
+        <img src="qr-questions.png" alt="QR ל-8 השאלות המנחות">
+        <span class="studio-cta-qr-cap">סרקו לפתיחה</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1063,7 +1238,7 @@ p.body, p.lede {
       <div class="cap">
         <div class="cap-icon">{ }</div>
         <div class="cap-title">קוד ברמה גבוהה</div>
-        <div class="cap-desc">טוב יותר ממתכנתים בינוניים. כותב, מנתח ומתקן.</div>
+        <div class="cap-desc">טוב יותר ממתכנתים מומחים (לא בינוניים). כותב, מנתח ומתקן.</div>
       </div>
       <div class="cap">
         <div class="cap-icon">+</div>
@@ -1122,6 +1297,9 @@ p.body, p.lede {
     <p class="body" style="margin-top: 2.5rem; padding: 1.4rem 1.6rem; background: var(--accent-tint); border-radius: var(--radius-md); border-right: 4px solid var(--accent); font-weight: 500; color: var(--ink); font-size: clamp(1.1rem, 1.5vw, 1.45rem);">
       כדי לפתור את בעיית ההערכה, אין מנוס משינוי שיטות ההוראה.
     </p>
+    <p class="empathic-question" style="margin-top: 2.4rem; padding-top: 1.6rem; border-top: 1.5px dashed var(--line); border-bottom: none; padding-bottom: 0;">
+      אבל מה לגבי המומחיות שלי? האם אין לה ערך?
+    </p>
   </div>
 </section>
 
@@ -1129,9 +1307,6 @@ p.body, p.lede {
 <section class="slide" data-section="חלק 3 · המרצה כנווט" aria-labelledby="s11-title">
   <div class="slide-inner">
     <h3 class="eyebrow"><span class="eyebrow-dot"></span>שינוי תפקיד המרצה</h3>
-    <p class="empathic-question">
-      אבל מה לגבי המומחיות שלי? האם אין לה ערך?
-    </p>
     <h2 class="section" id="s11-title" style="font-size: clamp(1.8rem, 3.2vw, 2.8rem);">
       מ"מוסר ידע" ל<span style="color: var(--teal-deep);">"נווט מסע".</span>
     </h2>
@@ -1197,25 +1372,31 @@ p.body, p.lede {
 
 <!-- ============ SLIDE 14 — חלק 4: סטודיו ============ -->
 <section class="slide" data-section="חלק 4 · סטודיו אישי" aria-labelledby="s14-title">
-  <div class="slide-inner" style="text-align: center;">
+  <div class="slide-inner studio-center-stack">
     <h3 class="eyebrow" style="justify-content: center;"><span class="eyebrow-dot"></span>חלק 4 · סטודיו למחשבה מעשית</h3>
-    <h2 class="section" id="s14-title" style="font-size: clamp(2rem, 3.4vw, 3rem);">
+    <h2 class="section" id="s14-title" style="font-size: clamp(2rem, 3.4vw, 3rem); text-align: center;">
       מסע למידה אישי<br>
       <span style="color: var(--brand);">בנושא לא מוכר</span>
     </h2>
-    <p class="lede" style="max-width: 60ch; margin: 1.5rem auto 0; font-size: clamp(1.2rem, 1.5vw, 1.5rem);">
-      פתחו את הסטודיו האישי במכשיר שלכם. הפרומפט המלא, ההוראות וארבעת השלבים מחכים שם.
+    <p class="lede" style="max-width: 60ch; text-align: center; margin: 1rem auto 0; font-size: clamp(1.2rem, 1.5vw, 1.5rem);">
+      פתחו את הסטודיו האישי במכשיר שלכם. הפרומפט המלא, ההוראות וכל השלבים מחכים שם.
     </p>
-    <p class="body" style="margin-top: 1rem; font-weight: 600; color: var(--brand); font-size: clamp(1.1rem, 1.4vw, 1.4rem);">
+    <p class="body" style="margin: 0.4rem auto 0; font-weight: 600; color: var(--brand); font-size: clamp(1.15rem, 1.5vw, 1.5rem); text-align: center; max-width: none;">
       ההתנסות תיקח רבע שעה.
     </p>
-    <a href="https://tomhagiladi.github.io/seminar-30-4-26-v2/app/#/explore" target="_blank" rel="noopener"
-       style="display: inline-block; margin-top: 2.5rem; padding: 1.1rem 2.4rem; background: var(--accent); color: var(--bg); border-radius: var(--radius-md); font-family: var(--sans); font-weight: 600; font-size: clamp(1.15rem, 1.4vw, 1.4rem); text-decoration: none; box-shadow: 0 4px 14px rgba(217,87,42,0.35);">
-      פתחו את הסטודיו האישי ←
-    </a>
-    <p class="body" style="margin-top: 1.6rem; font-family: var(--mono); color: var(--ink-mute); font-size: clamp(1rem, 1.15vw, 1.15rem); direction: ltr;">
-      tomhagiladi.github.io/seminar-30-4-26-v2/app/#/explore
-    </p>
+    <div class="studio-cta is-centered" style="grid-template-columns: auto 1fr;">
+      <div class="studio-cta-qr">
+        <img src="qr-explore.png" alt="QR לסטודיו האישי">
+        <span class="studio-cta-qr-cap">סרקו לפתיחה</span>
+      </div>
+      <div class="studio-cta-text" style="align-items: flex-start;">
+        <div class="studio-cta-title">סטודיו אישי בכלי AI</div>
+        <div class="studio-cta-meta">סרקו את ה-QR או לחצו על הכפתור</div>
+        <a href="https://tomhagiladi.github.io/seminar-30-4-26-v2/app/#/explore" target="_blank" rel="noopener" class="studio-cta-button" style="background: var(--accent); box-shadow: 0 4px 14px rgba(217,87,42,0.35);">
+          פתחו את הסטודיו ←
+        </a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1267,10 +1448,6 @@ p.body, p.lede {
     <p class="lede" style="margin-top: 1.5rem; max-width: 60ch;">
       כדי שהאקדמיה תישאר רלוונטית — מסירת ידע יוצאת, עיצוב והנחיה של מסעות אותנטיים נכנסים.
     </p>
-    <div class="end-qr">
-      <img src="app-qr.png" alt="QR לאפליקציית הסדנה">
-      <div class="end-qr-caption">סרקו לפתיחת האפליקציה</div>
-    </div>
     <div class="contact-block">
       <div><strong>תום הגלעדי</strong></div>
       <a href="mailto:tomhagiladi@gmail.com">tomhagiladi@gmail.com</a>
@@ -1285,7 +1462,7 @@ p.body, p.lede {
 
 <div class="nav-ui is-visible" role="navigation" aria-label="ניווט במצגת">
   <button class="nav-btn" id="prevBtn" aria-label="שקופית קודמת">→</button>
-  <span class="nav-counter" id="navCounter">1 / 19</span>
+  <span class="nav-counter" id="navCounter">1 / 20</span>
   <button class="nav-btn" id="nextBtn" aria-label="שקופית הבאה">←</button>
 </div>
 
