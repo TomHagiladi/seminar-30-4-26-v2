@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#FAF6EE">
+<title>סדנת AI · 30.4.26</title>
+<meta name="description" content="אפליקציה מלווה לסדנה על למידה אותנטית, יוטגוגיה והערכה בעידן ה-AI.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logo.png">
+
+<style>
+:root {
+  --bg: #FAF6EE;
+  --bg-deep: #F2EBDC;
+  --surface: #FFFFFF;
+  --ink: #1F1B16;
+  --ink-soft: #4A4137;
+  --ink-mute: #8A7E6E;
+  --line: #DCD2BD;
+  --line-soft: #E9E1CD;
+  --brand: #9B2C3E;
+  --brand-deep: #7A1F2E;
+  --accent: #D9572A;
+  --accent-deep: #A53A14;
+  --accent-tint: #FCEDD6;
+  --teal: #1B7A6E;
+  --teal-tint: #D6EDE7;
+  --error: #B7372E;
+  --serif: 'Frank Ruhl Libre', 'Times New Roman', serif;
+  --sans: 'Heebo', 'Segoe UI', system-ui, sans-serif;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --shadow-sm: 0 1px 2px rgba(31, 27, 22, 0.05);
+  --shadow-md: 0 4px 14px rgba(31, 27, 22, 0.07);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+html { font-size: 16px; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--brand); text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: var(--brand-deep); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+
+.skip-link {
+  position: absolute; right: -200px; top: 0;
+  background: var(--ink); color: var(--bg);
+  padding: 0.5rem 1rem; z-index: 100;
+}
+.skip-link:focus { right: 0; }
+
+/* ========== Layout ========== */
+.site-header {
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-soft);
+  padding: 0.9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.brand-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--ink);
+}
+.brand-mark img { width: 36px; height: 36px; object-fit: contain; }
+.brand-text {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.brand-text small {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--ink-mute);
+}
+
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 1.5rem 1.2rem 5rem;
+}
+@media (min-width: 720px) {
+  main { padding: 2.5rem 2rem 5rem; }
+}
+
+.route { display: none; }
+.route.is-active { display: block; animation: fade 220ms var(--ease-out); }
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+/* ========== Typography ========== */
+h1.page-title {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(1.9rem, 5vw, 2.7rem);
+  line-height: 1.15;
+  margin-bottom: 0.6rem;
+  color: var(--ink);
+}
+h2.section-title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  margin: 1.8rem 0 0.6rem;
+  color: var(--ink);
+}
+h3.eyebrow {
+  font-family: var(--sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--brand);
+  margin-bottom: 0.6rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--brand); }
+
+p.lede {
+  font-family: var(--sans);
+  font-size: clamp(1.05rem, 2.2vw, 1.15rem);
+  font-weight: 300;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+p.body {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+.muted { color: var(--ink-mute); font-size: 0.9rem; }
+
+/* ========== Form ========== */
+.field { margin-bottom: 1.4rem; }
+.field-label {
+  display: block;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+.field-hint {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--ink-mute);
+  font-weight: 400;
+  margin-top: 0.15rem;
+}
+.field-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.7rem;
+  height: 1.7rem;
+  border-radius: 50%;
+  background: var(--accent-tint);
+  color: var(--accent-deep);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-left: 0.5rem;
+}
+input[type="text"],
+textarea,
+select {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  font-family: var(--sans);
+  font-size: 1rem;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  transition: border-color 180ms, box-shadow 180ms;
+  resize: vertical;
+}
+textarea { min-height: 5.5rem; }
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217, 87, 42, 0.15);
+}
+input::placeholder, textarea::placeholder { color: var(--ink-mute); opacity: 0.7; }
+
+/* ========== Button ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.4rem;
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1rem;
+  background: var(--brand);
+  color: var(--bg);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background 180ms, transform 100ms;
+  text-decoration: none;
+}
+.btn:hover { background: var(--brand-deep); }
+.btn:active { transform: scale(0.98); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn-accent { background: var(--accent); }
+.btn-accent:hover { background: var(--accent-deep); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line);
+}
+.btn-ghost:hover { background: var(--bg-deep); }
+.btn-block { width: 100%; }
+.btn-large { font-size: 1.1rem; padding: 1rem 1.5rem; }
+
+/* ========== Cards ========== */
+.card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 1.3rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--line-soft);
+  margin-bottom: 1rem;
+}
+.card-accent { border-right: 4px solid var(--accent); padding-right: 1.5rem; }
+
+/* ========== Landing route ========== */
+.route-home .hero {
+  text-align: center;
+  padding: 2rem 0 1rem;
+}
+.route-home .hero h1 {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: clamp(1.8rem, 5vw, 2.6rem);
+  margin-bottom: 0.8rem;
+}
+.route-home .hero p {
+  color: var(--ink-soft);
+  max-width: 50ch;
+  margin: 0 auto 1.2rem;
+  font-size: 1.05rem;
+}
+.route-home .nav-cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 600px) {
+  .route-home .nav-cards { grid-template-columns: 1fr 1fr; }
+}
+.nav-card {
+  display: block;
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.2rem 1.3rem;
+  text-decoration: none;
+  color: var(--ink);
+  transition: border-color 200ms, transform 200ms, box-shadow 200ms;
+}
+.nav-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.nav-card-num {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: var(--brand);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.3rem;
+}
+.nav-card h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+.nav-card p {
+  font-size: 0.9rem;
+  color: var(--ink-mute);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ========== Status banner ========== */
+.banner {
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  margin: 1rem 0;
+  background: var(--accent-tint);
+  color: var(--accent-deep);
+  border-right: 4px solid var(--accent);
+}
+.banner-success {
+  background: var(--teal-tint);
+  color: var(--teal);
+  border-color: var(--teal);
+}
+.banner-error {
+  background: #FCDED9;
+  color: var(--error);
+  border-color: var(--error);
+}
+
+/* ========== Submission complete ========== */
+.complete-state {
+  text-align: center;
+  padding: 2rem 1rem;
+}
+.complete-state .check {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--teal-tint);
+  color: var(--teal);
+  font-size: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-weight: 700;
+}
+
+/* ========== Prompt copy block ========== */
+.prompt-block {
+  position: relative;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: var(--radius-md);
+  padding: 1rem 1rem 1rem 4.5rem;
+  margin-bottom: 1rem;
+  direction: rtl;
+}
+.prompt-block pre {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+  margin: 0;
+  text-align: right;
+}
+.prompt-copy-btn {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background 180ms;
+  white-space: nowrap;
+}
+.prompt-copy-btn:hover { background: var(--accent-deep); }
+.prompt-copy-btn.copied { background: var(--teal); }
+
+/* ========== Steps (Explore route) ========== */
+.step {
+  background: var(--surface);
+  border: 1.5px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 1.3rem;
+  margin-bottom: 1rem;
+  position: relative;
+  padding-right: 4rem;
+}
+.step-num {
+  position: absolute;
+  right: 1.1rem;
+  top: 1.3rem;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--bg);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step h3 {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.15rem;
+  margin-bottom: 0.5rem;
+  color: var(--ink);
+}
+
+/* ========== Mirror route ========== */
+.mirror-stage { padding: 1rem 0; text-align: center; }
+.mirror-stat {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 4.5rem;
+  color: var(--brand);
+  line-height: 1;
+}
+.mirror-stat-label {
+  font-size: 1rem;
+  color: var(--ink-mute);
+  margin-bottom: 1.5rem;
+}
+.mirror-loading {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink-mute);
+  margin: 2rem 0;
+}
+.pattern-card {
+  background: var(--surface);
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: 1.3rem 1.4rem;
+  margin-bottom: 1rem;
+  text-align: right;
+  border-right: 4px solid var(--accent);
+}
+.pattern-title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+}
+.pattern-quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+  margin-bottom: 0.6rem;
+  border-right: 2px solid var(--line);
+  padding-right: 0.8rem;
+}
+.pattern-count {
+  display: inline-block;
+  background: var(--accent-tint);
+  color: var(--accent-deep);
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ========== Dashboard route ========== */
+.dash-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+}
+.dash-stat {
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  text-align: center;
+}
+.dash-stat-num {
+  font-family: var(--serif);
+  font-weight: 900;
+  font-size: 2rem;
+  color: var(--brand);
+  line-height: 1;
+}
+.dash-stat-label {
+  font-size: 0.8rem;
+  color: var(--ink-mute);
+  margin-top: 0.3rem;
+}
+.submission {
+  background: var(--surface);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 0.8rem;
+  font-size: 0.88rem;
+}
+.submission-head {
+  font-size: 0.78rem;
+  color: var(--ink-mute);
+  margin-bottom: 0.5rem;
+  font-family: monospace;
+  direction: ltr;
+  text-align: left;
+}
+.submission-row {
+  margin-bottom: 0.35rem;
+  line-height: 1.4;
+}
+.submission-row strong { color: var(--ink); margin-left: 0.4rem; }
+.dash-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 1rem 0;
+}
+
+/* ========== Util ========== */
+.spacer-1 { height: 1rem; }
+.spacer-2 { height: 2rem; }
+.text-center { text-align: center; }
+</style>
+</head>
+<body>
+
+<a href="#main-content" class="skip-link">דלג לתוכן הראשי</a>
+
+<header class="site-header" role="banner">
+  <a href="#/" class="brand-mark" aria-label="חזרה לדף הבית של האפליקציה">
+    <img src="logo.png" alt="לוגו תום הגלעדי">
+    <div class="brand-text">
+      סדנה · 30.4.26
+      <small>תום הגלעדי</small>
+    </div>
+  </a>
+</header>
+
+<main id="main-content" role="main">
+
+<!-- ========== HOME ========== -->
+<section class="route route-home is-active" data-route="/" aria-labelledby="home-h">
+  <div class="hero">
+    <h3 class="eyebrow" style="justify-content: center;"><span class="eyebrow-dot"></span>אפליקציה מלווה</h3>
+    <h1 id="home-h">למידה אותנטית והערכה<br>בעידן ה-AI</h1>
+    <p>בחרו את החלק שאתם נמצאים בו עכשיו. כל חלק עומד בפני עצמו — אפשר לחזור אליהם בכל רגע.</p>
+  </div>
+  <div class="nav-cards">
+    <a href="#/questions" class="nav-card">
+      <div class="nav-card-num">חלק 1</div>
+      <h3>8 שאלות מנחות לשיח</h3>
+      <p>שאלות שילוו את השיח שלכם בחדר. לקריאה — לא לכתיבה.</p>
+    </a>
+    <a href="#/explore" class="nav-card">
+      <div class="nav-card-num">חלק 4</div>
+      <h3>מסע למידה אישי בנושא לא מוכר</h3>
+      <p>גילוי עניין בנישה משעממת דרך שיחה עם AI.</p>
+    </a>
+  </div>
+</section>
+
+<!-- ========== QUESTIONS (Part 1 — read-only guide) ========== -->
+<section class="route route-questions" data-route="/questions" aria-labelledby="q-h">
+  <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 1 · שיתוף בזוגות</h3>
+  <h1 class="page-title" id="q-h">8 שאלות מנחות לשיח</h1>
+  <p class="lede">
+    שתפו זה את זה תהליך למידה אמיתי שעבר עליכם לאחרונה — מתוך רצון, סקרנות או צורך אישי. אין צורך לכתוב כלום: השאלות כאן רק כדי שיהיו מול העיניים בזמן השיחה.
+  </p>
+  <ol class="questions-list" style="margin-top: 2rem; list-style: none; padding: 0; counter-reset: q;">
+    <li style="counter-increment: q; padding: 1rem 1.2rem 1rem 1rem; padding-right: 3.4rem; margin-bottom: 0.7rem; background: var(--bg-deep, #F2EBDC); border-radius: 12px; position: relative;">
+      <span style="position: absolute; right: 1rem; top: 1rem; font-family: var(--serif, 'Frank Ruhl Libre',serif); font-size: 1.4rem; font-weight: 700; color: var(--brand, #9B2C3E);">1.</span>
+      <strong>הנושא —</strong> מה למדתם? מעשי או תיאורטי?
+    </li>
+    <li style="counter-increment: q; padding: 1rem 1.2rem 1rem 1rem; padding-right: 3.4rem; margin-bottom: 0.7rem; background: var(--bg-deep, #F2EBDC); border-radius: 12px; position: relative;">
+      <span style="position: absolute; right: 1rem; top: 1rem; font-family: var(--serif, 'Frank Ruhl Libre',serif); font-size: 1.4rem; font-weight: 700; color: var(--brand, #9B2C3E);">2.</span>
+      <strong>המוטיבציה —</strong> מה היה הגירוי הראשוני? צורך פרקטי, סקרנות, תחביב?
+    </li>
+    <li style="counter-increment: q; padding: 1rem 1.2rem 1rem 1rem; padding-right: 3.4rem; margin-bottom: 0.7rem; background: var(--bg-deep, #F2EBDC); border-radius: 12px; position: relative;">
+      <span style="position: absolute; right: 1rem; top: 1rem; font-family: var(--serif, 'Frank Ruhl Libre',serif); font-size: 1.4rem; font-weight: 700; color: var(--brand, #9B2C3E);">3.</span>
+      <strong>עם מי —</strong> לבד? עם חברים? קהילה? מנטור? קורס?
+    </li>
+    <li style="counter-increment: q; padding: 1rem 1.2rem 1rem 1rem; padding-right: 3.4rem; margin-bottom: 0.7rem; background: var(--bg-deep, #F2EBDC); border-radius: 12px; position: relative;">
+      <span style="position: absolute; right: 1rem; top: 1rem; font-family: var(--serif, 'Frank Ruhl Libre',serif); font-size: 1.4rem; font-weight: 700; color: var(--brand, #9B2C3E);">4.</span>
+      <strong>המקורות —</strong> AI, יוטיוב, מאמרים, ניסוי וטעייה, הדרכה בתשלום, שילוב?
+    </li>
+    <li style="counter-increment: q; padding: 1rem 1.2rem 1rem 1rem; padding-right: 3.4rem; margin-bottom: 0.7rem; background: var(--bg-deep, #F2EBDC); border-radius: 12px; position: relative;">
+      <span style="position: absolute; right: 1rem; top: 1rem; font-family: var(--serif, 'Frank Ruhl Libre',serif); font-size: 1.4rem; font-weight: 700; color: var(--brand, #9B2C3E);">5.</span>
+      <strong>הזמן —</strong> מתי? על פני כמה זמן? בליץ אינטנסיבי, סופ"שים, נפרס לאורך תקופה?
+    </li>
+    <li style="counter-increment: q; padding: 1rem 1.2rem 1rem 1rem; padding-right: 3.4rem; margin-bottom: 0.7rem; background: var(--bg-deep, #F2EBDC); border-radius: 12px; position: relative;">
+      <span style="position: absolute; right: 1rem; top: 1rem; font-family: var(--serif, 'Frank Ruhl Libre',serif); font-size: 1.4rem; font-weight: 700; color: var(--brand, #9B2C3E);">6.</span>
+      <strong>ההתמדה —</strong> מה גרם לכם להמשיך?
+    </li>
+    <li style="counter-increment: q; padding: 1rem 1.2rem 1rem 1rem; padding-right: 3.4rem; margin-bottom: 0.7rem; background: var(--bg-deep, #F2EBDC); border-radius: 12px; position: relative;">
+      <span style="position: absolute; right: 1rem; top: 1rem; font-family: var(--serif, 'Frank Ruhl Libre',serif); font-size: 1.4rem; font-weight: 700; color: var(--brand, #9B2C3E);">7.</span>
+      <strong>ההפסקה —</strong> מה גרם להפסיק? השגת מטרה? חוסר עניין? אילוץ חיצוני?
+    </li>
+    <li style="counter-increment: q; padding: 1rem 1.2rem 1rem 1rem; padding-right: 3.4rem; margin-bottom: 0.7rem; background: var(--bg-deep, #F2EBDC); border-radius: 12px; position: relative;">
+      <span style="position: absolute; right: 1rem; top: 1rem; font-family: var(--serif, 'Frank Ruhl Libre',serif); font-size: 1.4rem; font-weight: 700; color: var(--brand, #9B2C3E);">8.</span>
+      <strong>העדות —</strong> איך אתם יודעים שלמדתם? מה מעיד על הלמידה? אילו כתבתם עליה עבודה — האם זה היה משקף את התהליך?
+    </li>
+  </ol>
+  <a href="#/" class="btn btn-ghost" style="margin-top: 2rem;">חזרה לדף הבית</a>
+</section>
+
+<!-- ========== SHARE (Part 1) ========== -->
+<section class="route route-share" data-route="/share" aria-labelledby="share-h">
+  <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 1 · שיתוף בזוגות</h3>
+  <h1 class="page-title" id="share-h">חוויית למידה אותנטית שעברתם</h1>
+  <p class="lede">
+    אחד מבני הזוג משתף תהליך למידה אמיתי שעבר לאחרונה — מתוך רצון, סקרנות או צורך אישי. השני מקליד את התשובות לשאלות.
+  </p>
+  <p class="body muted">
+    הכל אנונימי. השמות שלכם לא נשמרים. רק התגובות נצברות בין כל הזוגות, לצורך ענן המאפיינים שיוצג במליאה.
+  </p>
+
+  <div id="share-form-container">
+    <form id="share-form" novalidate>
+      <div class="field">
+        <label class="field-label" for="q-topic"><span class="field-num">1</span>מה היה הנושא? מעשי או תיאורטי?</label>
+        <textarea id="q-topic" name="topic" required></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="q-motivation"><span class="field-num">2</span>מה הייתה המוטיבציה הראשונית? <span class="field-hint">צורך פרקטי, סקרנות, תחביב, אחר?</span></label>
+        <textarea id="q-motivation" name="motivation" required></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="q-partners"><span class="field-num">3</span>עם מי התקיימה הלמידה? <span class="field-hint">לבד, חברים, קהילה, מנטור, קורס?</span></label>
+        <textarea id="q-partners" name="partners" required></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="q-sources"><span class="field-num">4</span>מה היו מקורות הידע? <span class="field-hint">AI, יוטיוב, מאמרים, ניסוי וטעייה, הדרכה בתשלום, שילוב?</span></label>
+        <textarea id="q-sources" name="sources" required></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="q-timing"><span class="field-num">5</span>מתי ועל פני כמה זמן התקיימה הלמידה? <span class="field-hint">בליץ אינטנסיבי, פנאי בסופ"ש, נפרס על תקופה?</span></label>
+        <textarea id="q-timing" name="timing" required></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="q-persistence"><span class="field-num">6</span>מה גרם לכם להתמיד במסע הלמידה?</label>
+        <textarea id="q-persistence" name="persistence" required></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="q-stop"><span class="field-num">7</span>מה גרם להפסקת הלמידה? <span class="field-hint">השגת המטרה, חוסר עניין, אילוץ חיצוני?</span></label>
+        <textarea id="q-stop" name="stopReason" required></textarea>
+      </div>
+      <div class="field">
+        <label class="field-label" for="q-evidence"><span class="field-num">8</span>איך אתם יודעים שלמדתם? מה העדות ללמידה? <span class="field-hint">אילו הייתם כותבים עבודה על מה שלמדתם — האם זה היה שיקוף טוב לתהליך שעברתם?</span></label>
+        <textarea id="q-evidence" name="evidence" required></textarea>
+      </div>
+
+      <div id="share-banner-container"></div>
+
+      <button type="submit" class="btn btn-block btn-large" id="share-submit-btn">
+        שלח לענן המאפיינים
+      </button>
+      <p class="muted text-center" style="margin-top: 0.7rem;">
+        טיוטה נשמרת אוטומטית במכשיר שלכם — אם הרשת תיפול, התשובות לא ילכו לאיבוד.
+      </p>
+    </form>
+  </div>
+
+  <div id="share-complete" class="complete-state" style="display: none;">
+    <div class="check">✓</div>
+    <h2 class="section-title">תודה ששיתפתם.</h2>
+    <p class="body">התשובות שלכם נצברו עם של שאר הזוגות. כעת חזרו למליאה ב-Zoom.</p>
+    <div style="margin-top: 1rem; display: flex; gap: 0.6rem; flex-wrap: wrap; justify-content: center;">
+      <a href="#/" class="btn btn-ghost">חזרה לדף הבית</a>
+      <button id="share-restart-btn" class="btn btn-ghost" style="border: 1px dashed currentColor;">התחל מחדש (אם הוגש בטעות)</button>
+    </div>
+  </div>
+</section>
+
+<!-- ========== EXPLORE (Part 4) ========== -->
+<section class="route route-explore" data-route="/explore" aria-labelledby="explore-h">
+  <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 4 · התנסות אישית</h3>
+  <h1 class="page-title" id="explore-h">מסע למידה אישי בנושא לא מוכר</h1>
+  <p class="lede">
+    המטרה: לזהות שגם בנושא שנראה הכי משעמם, יש דרך למצוא נקודת חיבור. ככה נראית למידה אותנטית — מתחילים בלתת לסקרנות לעבוד.
+  </p>
+
+  <div class="step">
+    <div class="step-num">1</div>
+    <h3>פתחו את ChatGPT, Gemini או Claude</h3>
+    <p class="body">העתיקו את הפרומפט הבא והדביקו בצ'אט.</p>
+    <div class="prompt-block">
+      <button class="prompt-copy-btn" data-copy="prompt-1">העתק</button>
+      <pre id="prompt-1">צור עבורי רשימה של 10 נושאים, קונספטים או תופעות אקראיים לחלוטין ממגוון דיסציפלינות שונות. אני לא מעוניין בתחומים רחבים, אלא רק בנישות הכי ספציפיות, אזוטריות, נדירות ולא מוכרות שיש לכל דיסציפלינה להציע.
+
+כללים חשובים:
+1. אל תציין את שם "תחום העל" או הדיסציפלינה (אל תכתוב מילים כמו: ביולוגיה, כלכלה, היסטוריה, פיזיקה וכדומה). גש ישירות לשם של הנישה הספציפית.
+2. הנישות חייבות להיות אקראיות לחלוטין וללא שום קשר אחת לשנייה.
+3. עבור כל סעיף, כתוב את שמו של המושג/הנושא הספציפי והוסף פסקה קצרה שמסבירה מהו.</pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">2</div>
+    <h3>בחרו את הסעיף הכי <em style="font-style: normal; color: var(--brand);">משעמם</em></h3>
+    <p class="body">זה שהייתם בוחרים אחרון אילו הייתם צריכים לסדר את הרשימה לפי "מה בא לי לעשות עליו קורס".</p>
+  </div>
+
+  <div class="step">
+    <div class="step-num">3</div>
+    <h3>שאלו על הנושא הזה את 4 השאלות הבאות</h3>
+    <p class="body">בכל פעם — ציינו לצ'אט את מספר הסעיף או את שם הנושא, ואז הדביקו את השאלה.</p>
+    <div class="prompt-block">
+      <button class="prompt-copy-btn" data-copy="prompt-2a">העתק</button>
+      <pre id="prompt-2a">התמקד בסעיף [מספר] וכתוב לי מה מעניין בתחום הזה.</pre>
+    </div>
+    <div class="prompt-block">
+      <button class="prompt-copy-btn" data-copy="prompt-2b">העתק</button>
+      <pre id="prompt-2b">אילו שאלות מעניינות אפשר לשאול על הנושא הזה או תחום הידע הזה?</pre>
+    </div>
+    <div class="prompt-block">
+      <button class="prompt-copy-btn" data-copy="prompt-2c">העתק</button>
+      <pre id="prompt-2c">איך אפשר ללמוד את הנושא הזה? הצע לי דרכים להתחיל את מסע הלמידה שלי בתחום, אילו הייתי רוצה להתעמק בו מבלי שיש לי כל ידע קודם.</pre>
+    </div>
+    <div class="prompt-block">
+      <button class="prompt-copy-btn" data-copy="prompt-2d">העתק</button>
+      <pre id="prompt-2d">איך היית ממליץ ללומדים שונים עם מאפייני למידה שונים ללמוד את התחום הזה?</pre>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-num">4</div>
+    <h3>רפלקציה</h3>
+    <p class="body">מצאתם איזשהו עניין בתחום שבחרתם? היתה איפשהו נקודת חיבור? הייתם יכולים לצלול לנקודה הזו?</p>
+  </div>
+
+  <div class="card card-accent">
+    <h3 style="font-family: var(--serif); font-weight: 700; font-size: 1.15rem; margin-bottom: 0.6rem;">עכשיו — מה לגבי הדיסציפלינה שלכם?</h3>
+    <p class="body">הסבירו למודל השפה בקצרה מהו תחום המומחיות / תחום ההוראה שלכם.</p>
+    <p class="body" style="margin-top: 0.6rem;">נסו את אותן 4 השאלות על הנושא <em style="font-style: normal; color: var(--brand);">שאתם מלמדים או עוסקים בו</em>. האם השיחה הזו מגלה לכם משהו על האופנים שבהם ניתן לנווט סטודנטים במסע למידה בתחום זה?</p>
+  </div>
+
+  <div class="step" style="margin-top: 2rem;">
+    <div class="step-num">5</div>
+    <h3>רוצים לנסות עוד תרגיל?</h3>
+    <p class="body">היכנסו למודל השפה המועדף עליכם — אם יש לכם אחד בתשלום, בחרו בו.</p>
+    <p class="body" style="margin-top: 0.6rem;">והזינו את הפרומפט הבא:</p>
+    <div class="prompt-block" style="margin-top: 0.8rem;">
+      <button class="prompt-copy-btn" data-copy="prompt-bonus">העתק</button>
+      <pre id="prompt-bonus">קרא את תוכן האתר הזה:
+https://tomhagiladi.github.io/seminar-30-4-26-v2/
+חקור ברשת על יוטגוגיה (Heutagogy).
+הצע לי שיטות הערכה בקורס {הזינו פה פרטים על הקורס המבוקש} שבהן הסטודנט מוערך על מסע הלמידה האישי שהוא יצא אליו בנושא המדובר.</pre>
+    </div>
+    <p class="muted" style="margin-top: 0.6rem;">החליפו את הסוגריים המסולסלים בתיאור של הקורס שבחרתם — תחום, רמה, מספר סטודנטים משוער, נושאים מרכזיים.</p>
+  </div>
+
+  <a href="#/" class="btn btn-ghost" style="margin-top: 2rem;">חזרה לדף הבית</a>
+</section>
+
+<!-- ========== EVALUATE (Part 5) ========== -->
+<section class="route route-evaluate" data-route="/evaluate" aria-labelledby="evaluate-h">
+  <h3 class="eyebrow"><span class="eyebrow-dot"></span>חלק 5 · סטודיו הערכה</h3>
+  <h1 class="page-title" id="evaluate-h">20% של קורס אחד.</h1>
+  <p class="lede">
+    אל תנסו לשנות הכל. בחרו <em style="font-style: normal; color: var(--brand);">קורס אחד</em> בסמסטר הבא, ובחרו <em style="font-style: normal; color: var(--brand);">20% מהציון</em>. הפכו אותם להערכת מסע מבוססת עדות.
+  </p>
+  <p class="body muted">הטופס הזה אישי — נשמר רק במכשיר שלכם. אין שליחה לאף אחד. הוא קיים כדי לעזור לכם להחזיק במחשבה.</p>
+
+  <form id="evaluate-form">
+    <div class="field">
+      <label class="field-label" for="ev-course">שם הקורס</label>
+      <input id="ev-course" type="text" placeholder="למשל: מבוא לפסיכולוגיה קוגניטיבית">
+    </div>
+    <div class="field">
+      <label class="field-label" for="ev-current">מהי המטלה / רכיב שתעשו עליו את ה-20%? <span class="field-hint">איך נראה היום הרכיב שאתם הולכים לשנות?</span></label>
+      <textarea id="ev-current"></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label" for="ev-evidence">איזו <em style="font-style: normal; color: var(--brand);">עדות-מסע</em> תבקשו מהסטודנטים? <span class="field-hint">פורטפוליו, יומן רפלקציה, הקלטה בעל פה, תיעוד שיחות עם AI, אחר?</span></label>
+      <textarea id="ev-evidence"></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label" for="ev-portfolio">מה ייכלל בתיק הראיות?</label>
+      <textarea id="ev-portfolio"></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label" for="ev-grading">איך תיראה ההערכה? <span class="field-hint">האם הסטודנט "תובע" ציון ומנמק? האם אתם מעריכים? משהו ביניים?</span></label>
+      <textarea id="ev-grading"></textarea>
+    </div>
+    <div class="field">
+      <label class="field-label" for="ev-fear">מה הכי מפחיד אתכם בשינוי הזה?</label>
+      <textarea id="ev-fear"></textarea>
+    </div>
+    <button type="button" class="btn btn-ghost btn-block" id="evaluate-export">הורד את התשובות כקובץ טקסט</button>
+  </form>
+</section>
+
+<!-- ========== ABOUT ========== -->
+<section class="route route-about" data-route="/about" aria-labelledby="about-h">
+  <h3 class="eyebrow"><span class="eyebrow-dot"></span>על הסדנה</h3>
+  <h1 class="page-title" id="about-h">למידה אותנטית והערכה מחדש</h1>
+  <p class="lede">
+    המטרה של המפגש הזה <em style="font-style: normal; color: var(--brand);">לא</em> להגיע לפתרון או למתכון קסם לבעיית ההערכה.
+  </p>
+  <p class="body">
+    המטרה: לפתוח ערוצי מחשבה, לאתגר את הקיים, ולנסות להשתחרר מפרדיגמות שאנחנו מורגלים אליהן.
+  </p>
+  <p class="body">
+    המצב באקדמיה אל מול ה-AI הוא גרוע מאין כמוהו. לא נראה שפתרונות מוכרים יעשו את העבודה. אנחנו כאן כדי להתחיל לחשוב אחרת.
+  </p>
+
+  <h2 class="section-title">מבנה המפגש</h2>
+  <ol class="bullets" style="list-style: none; padding: 0;">
+    <li style="margin-bottom: 0.6rem;"><strong>חלק 1 (~25 דק'):</strong> חימום בזוגות בחדרי זום. שיתוף חוויית למידה אותנטית.</li>
+    <li style="margin-bottom: 0.6rem;"><strong>חלק 2 (~20 דק'):</strong> מליאה — התנגשות הפרדיגמות. למה מסירת ידע מתה.</li>
+    <li style="margin-bottom: 0.6rem;"><strong>חלק 3 (~20 דק'):</strong> מהמרצה כמוסר ידע למרצה כנווט מסע. הערכה כתהליך.</li>
+    <li style="margin-bottom: 0.6rem;"><strong>חלק 4 (~20 דק'):</strong> סטודיו אישי — תרגיל 10 הנושאים.</li>
+    <li><strong>חלק 5 (~5-10 דק'):</strong> תביעת ציון, AI כפרקליט השטן, וקריאה לפעולה.</li>
+  </ol>
+
+  <h2 class="section-title">המסר המרכזי</h2>
+  <p class="body">
+    האינטראקציה שלנו עם הידע השתנתה לנצח. כדי שהאקדמיה תישאר רלוונטית — עלינו לזנוח את מסירת הידע ולעבור לעיצוב והנחיה של מסעות למידה אותנטיים.
+  </p>
+
+  <a href="#/" class="btn btn-ghost" style="margin-top: 2rem;">חזרה לדף הבית</a>
+</section>
+
+<!-- ========== MIRROR (facilitator only) ========== -->
+<section class="route route-mirror" data-route="/mirror" aria-labelledby="mirror-h">
+  <h3 class="eyebrow"><span class="eyebrow-dot"></span>תצוגת מנחה · AI Mirror</h3>
+  <h1 class="page-title" id="mirror-h">ענן המאפיינים של הסדנה</h1>
+
+  <div id="mirror-auth-warn" class="banner banner-error" style="display: none;">
+    אין מפתח מנחה. הוסיפו <code>?key=...</code> ל-URL.
+  </div>
+
+  <div id="mirror-stage" class="mirror-stage">
+    <div class="mirror-stat" id="mirror-count">—</div>
+    <div class="mirror-stat-label">תגובות נצברו</div>
+    <button class="btn btn-large btn-accent" id="mirror-generate-btn">צור ענן מאפיינים</button>
+    <p class="muted" style="margin-top: 0.7rem;">לוחצים פעם אחת בלבד, אחרי שכל הזוגות סיימו לשלוח.</p>
+  </div>
+
+  <div id="mirror-output" style="margin-top: 2rem;"></div>
+</section>
+
+<!-- ========== DASHBOARD (facilitator only) ========== -->
+<section class="route route-dashboard" data-route="/dashboard" aria-labelledby="dash-h">
+  <h3 class="eyebrow"><span class="eyebrow-dot"></span>דשבורד מנחה</h3>
+  <h1 class="page-title" id="dash-h">ניטור הגשות חי</h1>
+
+  <div id="dash-auth-warn" class="banner banner-error" style="display: none;">
+    אין מפתח מנחה. הוסיפו <code>?key=...</code> ל-URL.
+  </div>
+
+  <div class="dash-stats">
+    <div class="dash-stat">
+      <div class="dash-stat-num" id="dash-count">0</div>
+      <div class="dash-stat-label">הגשות</div>
+    </div>
+    <div class="dash-stat">
+      <div class="dash-stat-num" id="dash-state">פתוח</div>
+      <div class="dash-stat-label">סטטוס הגשות</div>
+    </div>
+  </div>
+
+  <div class="dash-actions">
+    <a href="#/mirror" class="btn">פתח את AI Mirror</a>
+    <button class="btn btn-ghost" id="dash-toggle-state">סגור הגשות</button>
+    <button class="btn btn-ghost" id="dash-reset" style="color: var(--error); border-color: var(--error);">אפס סדנה</button>
+  </div>
+
+  <h2 class="section-title">תגובות אחרונות</h2>
+  <div id="dash-submissions"></div>
+</section>
+
+<!-- ========== 404 ========== -->
+<section class="route route-404" data-route="/404">
+  <h1 class="page-title">לא נמצא</h1>
+  <p class="body">הדף שביקשתם לא קיים. <a href="#/">חזרה לדף הבית</a>.</p>
+</section>
+
+</main>
+
+<script>
+(function() {
+  'use strict';
+
+  const ROUTES = ['/', '/questions', '/share', '/explore', '/evaluate', '/about', '/mirror', '/dashboard'];
+  const WORKSHOP_ID = '30-4-26';
+
+  function getRoute() {
+    const hash = location.hash.replace(/^#/, '') || '/';
+    const path = hash.split('?')[0] || '/';
+    return ROUTES.includes(path) ? path : '/404';
+  }
+
+  function getQueryParam(name) {
+    const hash = location.hash;
+    const qIdx = hash.indexOf('?');
+    if (qIdx === -1) return null;
+    const params = new URLSearchParams(hash.slice(qIdx + 1));
+    return params.get(name);
+  }
+
+  function showRoute() {
+    const route = getRoute();
+    document.querySelectorAll('.route').forEach(el => {
+      el.classList.toggle('is-active', el.dataset.route === route);
+    });
+    window.scrollTo(0, 0);
+    if (route === '/share') initShareForm();
+    if (route === '/explore') initExploreReflection();
+    if (route === '/evaluate') initEvaluateForm();
+    if (route === '/mirror') initMirror();
+    if (route === '/dashboard') initDashboard();
+  }
+
+  window.addEventListener('hashchange', showRoute);
+
+  // ========== Share form ==========
+  const SHARE_DRAFT_KEY = `seminar-${WORKSHOP_ID}-share-draft`;
+  const SHARE_DONE_KEY = `seminar-${WORKSHOP_ID}-share-done`;
+  const SHARE_FIELDS = ['topic', 'motivation', 'partners', 'sources', 'timing', 'persistence', 'stopReason', 'evidence'];
+
+  function initShareForm() {
+    const form = document.getElementById('share-form');
+    const completeView = document.getElementById('share-complete');
+    const formContainer = document.getElementById('share-form-container');
+    const submitBtn = document.getElementById('share-submit-btn');
+    const bannerContainer = document.getElementById('share-banner-container');
+    const restartBtn = document.getElementById('share-restart-btn');
+
+    // ?fresh=1 in URL hash clears local state and reloads to clean form.
+    if (getQueryParam('fresh') === '1') {
+      localStorage.removeItem(SHARE_DONE_KEY);
+      localStorage.removeItem(SHARE_DRAFT_KEY);
+      location.replace('#/share');
+      location.reload();
+      return;
+    }
+
+    if (restartBtn) {
+      restartBtn.onclick = () => {
+        if (!confirm('לאפס את הטופס המקומי ולהתחיל מחדש? (התגובה הקודמת שלכם כבר נשמרה אצל שאר הזוגות.)')) return;
+        localStorage.removeItem(SHARE_DONE_KEY);
+        localStorage.removeItem(SHARE_DRAFT_KEY);
+        location.reload();
+      };
+    }
+
+    if (localStorage.getItem(SHARE_DONE_KEY)) {
+      formContainer.style.display = 'none';
+      completeView.style.display = 'block';
+      return;
+    }
+
+    formContainer.style.display = 'block';
+    completeView.style.display = 'none';
+
+    const draft = JSON.parse(localStorage.getItem(SHARE_DRAFT_KEY) || '{}');
+    SHARE_FIELDS.forEach(name => {
+      const el = form.querySelector(`[name="${name}"]`);
+      if (el && draft[name]) el.value = draft[name];
+    });
+
+    function saveDraft() {
+      const data = {};
+      SHARE_FIELDS.forEach(name => {
+        const el = form.querySelector(`[name="${name}"]`);
+        if (el) data[name] = el.value;
+      });
+      localStorage.setItem(SHARE_DRAFT_KEY, JSON.stringify(data));
+    }
+    SHARE_FIELDS.forEach(name => {
+      const el = form.querySelector(`[name="${name}"]`);
+      if (el) el.addEventListener('input', saveDraft);
+    });
+
+    form.onsubmit = async (e) => {
+      e.preventDefault();
+      bannerContainer.innerHTML = '';
+
+      const answers = {};
+      let missing = [];
+      SHARE_FIELDS.forEach(name => {
+        const el = form.querySelector(`[name="${name}"]`);
+        const val = el ? el.value.trim() : '';
+        answers[name] = val;
+        if (!val) missing.push(name);
+      });
+
+      if (missing.length > 0) {
+        bannerContainer.innerHTML = `<div class="banner banner-error">נא למלא את כל ${missing.length} השדות שנותרו לפני שליחה.</div>`;
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'שולח...';
+
+      try {
+        const res = await fetch('/api/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ answers })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || `שגיאה ${res.status}`);
+        }
+        localStorage.setItem(SHARE_DONE_KEY, '1');
+        localStorage.removeItem(SHARE_DRAFT_KEY);
+        formContainer.style.display = 'none';
+        completeView.style.display = 'block';
+      } catch (err) {
+        bannerContainer.innerHTML = `<div class="banner banner-error">השליחה נכשלה: ${err.message}. הטיוטה נשמרה — נסו שוב בעוד רגע.</div>`;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'שלח לענן המאפיינים';
+      }
+    };
+  }
+
+  // ========== Explore reflection ==========
+  function initExploreReflection() {
+    const ta = document.getElementById('explore-reflection');
+    if (!ta) return;
+    const KEY = `seminar-${WORKSHOP_ID}-explore-reflection`;
+    ta.value = localStorage.getItem(KEY) || '';
+    ta.oninput = () => localStorage.setItem(KEY, ta.value);
+  }
+
+  // ========== Evaluate form ==========
+  function initEvaluateForm() {
+    const fields = ['ev-course', 'ev-current', 'ev-evidence', 'ev-portfolio', 'ev-grading', 'ev-fear'];
+    const KEY = `seminar-${WORKSHOP_ID}-evaluate`;
+    const data = JSON.parse(localStorage.getItem(KEY) || '{}');
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.value = data[id] || '';
+        el.oninput = () => {
+          data[id] = el.value;
+          localStorage.setItem(KEY, JSON.stringify(data));
+        };
+      }
+    });
+
+    const exportBtn = document.getElementById('evaluate-export');
+    if (exportBtn) {
+      exportBtn.onclick = () => {
+        const labels = {
+          'ev-course': 'שם הקורס',
+          'ev-current': 'הרכיב הנוכחי',
+          'ev-evidence': 'עדות-מסע',
+          'ev-portfolio': 'תיק ראיות',
+          'ev-grading': 'אופן ההערכה',
+          'ev-fear': 'מה מפחיד'
+        };
+        const lines = ['סטודיו הערכה — תכנון 20% של קורס אחד', `סדנת AI · 30.4.2026`, ''];
+        fields.forEach(id => {
+          const el = document.getElementById(id);
+          lines.push(`### ${labels[id]}`);
+          lines.push(el ? el.value : '');
+          lines.push('');
+        });
+        const blob = new Blob([lines.join('\n')], { type: 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'סטודיו-הערכה-30-4-26.txt';
+        a.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+      };
+    }
+  }
+
+  // ========== Copy buttons ==========
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.prompt-copy-btn');
+    if (!btn) return;
+    const targetId = btn.dataset.copy;
+    const targetEl = document.getElementById(targetId);
+    if (!targetEl) return;
+    navigator.clipboard.writeText(targetEl.textContent).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = 'הועתק ✓';
+      btn.classList.add('copied');
+      setTimeout(() => { btn.textContent = orig; btn.classList.remove('copied'); }, 1800);
+    }).catch(() => {
+      btn.textContent = 'העתקה נכשלה';
+    });
+  });
+
+  // ========== Mirror (facilitator) ==========
+  let mirrorPollInterval = null;
+
+  async function initMirror() {
+    if (mirrorPollInterval) { clearInterval(mirrorPollInterval); mirrorPollInterval = null; }
+    const key = getQueryParam('key');
+    const warn = document.getElementById('mirror-auth-warn');
+    const countEl = document.getElementById('mirror-count');
+    const generateBtn = document.getElementById('mirror-generate-btn');
+    const output = document.getElementById('mirror-output');
+
+    if (!key) {
+      warn.style.display = 'block';
+      countEl.textContent = '—';
+      generateBtn.disabled = true;
+      return;
+    }
+    warn.style.display = 'none';
+    generateBtn.disabled = false;
+
+    async function refreshCount() {
+      try {
+        const res = await fetch(`/api/all?key=${encodeURIComponent(key)}`);
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        const data = await res.json();
+        countEl.textContent = data.submissions ? data.submissions.length : 0;
+      } catch (err) {
+        countEl.textContent = '—';
+      }
+    }
+    refreshCount();
+    mirrorPollInterval = setInterval(refreshCount, 4000);
+
+    generateBtn.onclick = async () => {
+      generateBtn.disabled = true;
+      output.innerHTML = '<div class="mirror-loading">מנתח את התגובות... רגע אחד.</div>';
+      try {
+        const res = await fetch(`/api/synthesize?key=${encodeURIComponent(key)}`, {
+          method: 'POST'
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error || `status ${res.status}`);
+        renderPatterns(data.patterns || [], output);
+        if (data.fallback) {
+          output.insertAdjacentHTML('afterbegin', '<div class="banner">השרת השתמש בסינתזה מוכנה מראש (ה-API לא הגיב).</div>');
+        }
+      } catch (err) {
+        output.innerHTML = `<div class="banner banner-error">הסינתזה נכשלה: ${err.message}</div>`;
+      } finally {
+        generateBtn.disabled = false;
+        generateBtn.textContent = 'צור שוב';
+      }
+    };
+  }
+
+  function renderPatterns(patterns, container) {
+    if (!patterns.length) {
+      container.innerHTML = '<div class="banner">לא חזרו דפוסים. ייתכן שאין מספיק תגובות.</div>';
+      return;
+    }
+    const html = patterns.map(p => `
+      <div class="pattern-card">
+        <div class="pattern-title">${escapeHtml(p.title || '—')}</div>
+        <div class="pattern-quote">"${escapeHtml(p.quote || '')}"</div>
+        <span class="pattern-count">${p.count || '?'} תגובות</span>
+      </div>
+    `).join('');
+    container.innerHTML = html;
+  }
+
+  // ========== Dashboard ==========
+  let dashPollInterval = null;
+
+  function initDashboard() {
+    if (dashPollInterval) { clearInterval(dashPollInterval); dashPollInterval = null; }
+    const key = getQueryParam('key');
+    const warn = document.getElementById('dash-auth-warn');
+    const countEl = document.getElementById('dash-count');
+    const stateEl = document.getElementById('dash-state');
+    const subsEl = document.getElementById('dash-submissions');
+    const toggleBtn = document.getElementById('dash-toggle-state');
+    const resetBtn = document.getElementById('dash-reset');
+
+    if (!key) {
+      warn.style.display = 'block';
+      return;
+    }
+    warn.style.display = 'none';
+
+    async function refresh() {
+      try {
+        const res = await fetch(`/api/all?key=${encodeURIComponent(key)}`);
+        if (!res.ok) throw new Error(`status ${res.status}`);
+        const data = await res.json();
+        const subs = data.submissions || [];
+        countEl.textContent = subs.length;
+        stateEl.textContent = data.submissionsClosed ? 'סגור' : 'פתוח';
+        toggleBtn.textContent = data.submissionsClosed ? 'פתח הגשות' : 'סגור הגשות';
+        subsEl.innerHTML = subs.slice().reverse().map(s => renderSubmission(s)).join('') || '<p class="muted">אין הגשות עדיין.</p>';
+      } catch (err) {
+        countEl.textContent = '—';
+        subsEl.innerHTML = `<div class="banner banner-error">שגיאת טעינה: ${err.message}</div>`;
+      }
+    }
+    refresh();
+    dashPollInterval = setInterval(refresh, 3000);
+
+    toggleBtn.onclick = async () => {
+      const isOpen = stateEl.textContent === 'פתוח';
+      try {
+        await fetch(`/api/all?key=${encodeURIComponent(key)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'toggleState', closed: isOpen })
+        });
+        refresh();
+      } catch (err) { alert('כישלון: ' + err.message); }
+    };
+
+    resetBtn.onclick = async () => {
+      if (!confirm('בטוח? פעולה זו תמחק את כל ההגשות.')) return;
+      try {
+        await fetch(`/api/all?key=${encodeURIComponent(key)}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'reset' })
+        });
+        refresh();
+      } catch (err) { alert('כישלון: ' + err.message); }
+    };
+  }
+
+  function renderSubmission(s) {
+    const time = s.submittedAt ? new Date(s.submittedAt).toLocaleTimeString('he-IL', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '?';
+    const a = s.answers || {};
+    return `
+      <div class="submission">
+        <div class="submission-head">${time} · ${s.id ? s.id.slice(0, 8) : '?'}</div>
+        <div class="submission-row"><strong>נושא:</strong>${escapeHtml(a.topic || '')}</div>
+        <div class="submission-row"><strong>מוטיבציה:</strong>${escapeHtml(a.motivation || '')}</div>
+        <div class="submission-row"><strong>מקורות:</strong>${escapeHtml(a.sources || '')}</div>
+        <div class="submission-row"><strong>עדות:</strong>${escapeHtml(a.evidence || '')}</div>
+      </div>
+    `;
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  // Boot
+  showRoute();
+})();
+</script>
+
+</body>
+</html>
